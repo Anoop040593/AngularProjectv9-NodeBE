@@ -1,12 +1,12 @@
 import Boom from "@hapi/boom";
-
-import { fakeListings } from "./fake-data";
+import db from '../database'
 export const getListingRoute = {
     method: 'GET',
     path: '/api/listings/{id}',
-    handler: (req, h) => {
+    handler: async (req, h) => {
         const id = req.params.id;
-        const listing =  fakeListings.find(listing => listing.id === id);
+        const { results } = await db.query('SELECT * FROM listings where id=?', [id]);
+        const listing = results[0];
         if(!listing) {
             throw Boom.notFound(`Listing doesn't exist with id: ${id}`);
         }
