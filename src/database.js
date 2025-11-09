@@ -8,7 +8,13 @@ const connection = mysql.createConnection({
 });
 
  const db = {
-    connect: () => connection.connect(),
+    connect: () => connection.connect((err) => {
+        if (err) {
+            console.error('Database connection error:', err);
+        } else {
+            console.log('Database connected');
+        }
+    }),
     query: (queryString, escapedValues) => 
         new Promise((resolve, reject) => {
             connection.query(queryString, escapedValues, (error, results, fields) => {

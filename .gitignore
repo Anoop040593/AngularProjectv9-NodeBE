@@ -42,7 +42,7 @@ build/Release
 node_modules/
 jspm_packages/
 node_modules/.cache/
-
+credentials.json
 .babel.*
 
 # Snowpack dependency directory (https://snowpack.dev/)
