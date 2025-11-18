@@ -3,15 +3,20 @@ import routes from './routes'
 import db from './database'
 import * as admin from 'firebase-admin';
 import credentials from '../credentials.json'
+import dotenv from 'dotenv';
+import inert from '@hapi/inert'
+
 admin.initializeApp({
     credential: admin.credential.cert(credentials),
 });
+const PORT = process.env.PORT ? Number(process.env.PORT) : 8000;
 let server;
 const start = async() => {
      server = Hapi.server({
-        port: 8000,
-        host: 'localhost',
+        port: PORT,
+        host: '0.0.0.0',
     })
+    await server.register(inert);
 
     routes.forEach(route => server.route(route));
     db.connect();
